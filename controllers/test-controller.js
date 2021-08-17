@@ -1,7 +1,6 @@
 const { Test } = require('../models');
 
 const testController = {
-    // get all pizzas
     getAllTest(req, res) {
         Test.find({})
             .then(dbPizzaData => res.json(dbPizzaData))
