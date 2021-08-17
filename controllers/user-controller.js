@@ -1,5 +1,5 @@
 const { User } = require('../models')
-const errMSG = ['No user found with this id!']
+const errMSG = ['No user found with this id!','This friend does not exist!']
 const userController = {
     //get all users
     getAllUsers(req,res) {
@@ -34,6 +34,21 @@ const userController = {
             .catch(err => res.status(400).json(err));
     },
 
+    addFriend({params},res){
+        User.findByIdAndUpdate(
+            {_id:params.id},
+            { $push: { friends: params.friendId } },
+            { new: true}
+            )
+            .then(dbUserData => {
+                if(!dbUserData) {
+                    res.status(404).json({message: errMSG[1]})
+                }
+                res.json(dbUserData)
+            })
+            .catch(err => res.status(400).json(err));
+    },
+
     updateUser({params, body}, res) {
         User.findOneAndUpdate(
             {_id: params.id},
@@ -61,6 +76,21 @@ const userController = {
             res.json(dbUserData);
         })
         .catch(err => res.status(400).json(err));
+    },
+    
+    deleteFriend({params},res){
+        User.findByIdAndUpdate(
+            {_id:params.id},
+            { $pull: { friends: params.friendId } },
+            { new: true}
+            )
+            .then(dbUserData => {
+                if(!dbUserData) {
+                    res.status(404).json({message: errMSG[1]})
+                }
+                res.json(dbUserData)
+            })
+            .catch(err => res.status(400).json(err));
     }
 }
 
