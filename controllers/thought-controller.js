@@ -40,6 +40,22 @@ const thoughtController = {
             })
     },
 
+    addReaction({ params, body }, res) {
+        Thought.findOneAndUpdate(
+            { _id: params.id },
+            { $push: { reactions: body } },
+            { new: true, runValidators: true }
+        )
+            .then(dbReactionData => {
+                if (!dbReactionData) {
+                    res.status(404).json({ message: errMSG[0] })
+                    return
+                }
+                res.json(dbReactionData)
+            })
+            .catch(err => res.json(err))
+    },
+
     updateThought({ params, body }, res) {
         Thought.findOneAndUpdate(
             { _id: params.id },
@@ -67,6 +83,25 @@ const thoughtController = {
                 res.json(dbThoughtData);
             })
             .catch(err => res.status(400).json(err));
+    },
+
+    deleteReaction({ params, body }, res) {
+        Thought.findOneAndUpdate(
+            { _id: params.id },
+            { $pull: { reactions: { reactionId: body.reactionId } } },
+            { new: true }
+        )
+            .then(dbReactionData => {
+                if (!dbReactionData) {
+                    res.status(404).json({ message: errMSG[0] })
+                    return
+                }
+                Thought.findOneAndDelete(
+                    { reactionId: body.reactionId }
+                )
+                res.json(dbReactionData)
+            })
+            .catch(err => res.json(err))
     }
 }
 

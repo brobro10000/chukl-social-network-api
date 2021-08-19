@@ -48,7 +48,6 @@ const userController = {
             })
             .catch(err => res.status(400).json(err));
     },
-
     updateUser({params, body}, res) {
         User.findOneAndUpdate(
             {_id: params.id},
