@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Thought } = require('../models')
 const errMSG = ['No user found with this id!','This friend does not exist!']
 const userController = {
     //get all users
@@ -71,10 +71,14 @@ const userController = {
         .then(dbUserData=> {
             if(!dbUserData){
                 res.status(404).json({message: errMSG[0]})
-            }
-            res.json(dbUserData);
+            } 
+            if(dbUserData.thoughts)
+            Thought.deleteMany(
+                {_id: {$in: dbUserData.thoughts}}
+            )
+            .then(userData => res.json(userData))
+            .catch(err => res.status(400).json(err));
         })
-        .catch(err => res.status(400).json(err));
     },
     
     deleteFriend({params},res){
