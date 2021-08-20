@@ -10,7 +10,7 @@ const ReactionSchema = new Schema(
         reactionBody: {
             type:String,
             required:true,
-            max:[280, 'Calm down! Youre overreacting!']
+            maxlength:[280, 'Calm down! Youre overreacting!']
         },
         username: {
             type:String,
@@ -36,8 +36,8 @@ const ThoughtSchema = new Schema(
         thoughtText: {
             type:String,
             required:true,
-            min:[1, 'A thought it required'],
-            max:[280,'You think too much, consolidate your thought']
+            minlength:[1, 'A thought it required'],
+            maxlength:[280,'You think too much, consolidate your thought']
         },
         createdAt: {
             type:Date,
