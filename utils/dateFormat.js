@@ -13,5 +13,5 @@ const convertDate = () => {
 }
 convertDate().now()//?
 convertDate().toLocaleDateString(new Date)//?
-
+Date //?
 module.exports = convertDate
