@@ -1,5 +1,4 @@
 const { User, Thought } = require('../models');
-const { getUsersById } = require('./user-controller');
 const errMSG = ['No thought found with this id!']
 
 const thoughtController = {
@@ -36,9 +35,9 @@ const thoughtController = {
                     { _id: body.userId },
                     { $push: { thoughts: dataThoughtData._id } },
                     { new: true, runValidators: true }
-                ).then(dbUserData => res.json(dbUserData))
-                    .catch(err => res.status(400).json(err));
+                ).then(() => res.json(dataThoughtData))
             })
+            .catch(err => res.status(400).json(err));
     },
 
     addReaction({ params, body }, res) {
@@ -83,13 +82,13 @@ const thoughtController = {
                     res.status(404).json({ message: errMSG[0] })
                 }
                 User.findOneAndUpdate(
-                    {thoughts: dbThoughtData._id},
-                    {$pull: {thoughts: dbThoughtData._id}}
+                    { thoughts: dbThoughtData._id },
+                    { $pull: { thoughts: dbThoughtData._id } }
                 ).then(data => {
                     console.log(data)
                     res.json(dbThoughtData);
                 })
-                .catch(err => res.status(400).json(err));
+                    .catch(err => res.status(400).json(err));
             })
     },
 

@@ -1,5 +1,4 @@
 const convertDate = () => {
-    var date = new Date;
     return {
         now: function () {
             return Date.now()
