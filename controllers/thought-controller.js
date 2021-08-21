@@ -1,4 +1,5 @@
-const { User, Thought } = require('../models')
+const { User, Thought } = require('../models');
+const { getUsersById } = require('./user-controller');
 const errMSG = ['No thought found with this id!']
 
 const thoughtController = {
@@ -14,7 +15,7 @@ const thoughtController = {
     getThoughtsById({ params }, res) {
         Thought.findOne({
             _id: params.id
-        })
+        }).populate('User')
             .then(dbThoughtData => {
                 if (!dbThoughtData) {
                     res.status(404).json({ message: errMSG[0] })
@@ -61,7 +62,7 @@ const thoughtController = {
             { _id: params.id },
             body,
             { new: true, runValidators: true }
-        )
+        ).populate('User')
             .then(dbThoughtData => {
                 if (!dbThoughtData) {
                     res.status(404).json({ message: errMSG[0] });
@@ -77,12 +78,19 @@ const thoughtController = {
             _id: params.id
         })
             .then(dbThoughtData => {
+                console.log(dbThoughtData)
                 if (!dbThoughtData) {
                     res.status(404).json({ message: errMSG[0] })
                 }
-                res.json(dbThoughtData);
+                User.findOneAndUpdate(
+                    {thoughts: dbThoughtData._id},
+                    {$pull: {thoughts: dbThoughtData._id}}
+                ).then(data => {
+                    console.log(data)
+                    res.json(dbThoughtData);
+                })
+                .catch(err => res.status(400).json(err));
             })
-            .catch(err => res.status(400).json(err));
     },
 
     deleteReaction({ params, body }, res) {
