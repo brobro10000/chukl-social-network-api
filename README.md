@@ -30,7 +30,11 @@
   * [Update](#update)
     * [User](#update-user)
     * [Thought](#update-thought)
-  * [Read]
+  * [Delete](#delete)
+    * [User](#delete-user)
+    * [Thought](#delete-thought)
+    * [Friend](#delete-friend)
+    * [Reaction](#delete-reaction)
   * [Credits](#credits)
   * [License(s)](#license)
   * [Contributers](#contributers)
@@ -118,9 +122,9 @@ If you want to view all users that have been created, in the URL or fetch call, 
 ---
 #### **Users By ID**
 ---
-![allusers](src/images/userbyidSS.png)
+![userbyId](src/images/userbyidSS.png)
 ---
-If you want to view a specific user, in hte URL or fetch call, direct to /api/users/:id and perform a GET method where :id refers to the user you wish to return the information of. This should return a user with the matching id from the URL parameter. 
+If you want to view a specific user, in the URL or fetch call, direct to /api/users/:id and perform a GET method where :id refers to the user you wish to return the information of. This should return a user with the matching id from the URL parameter. 
 
 
 ---
@@ -135,11 +139,9 @@ If you want to view all thoughts that have been created, in the URL or fetch cal
 ---
 #### **Thoughts By ID**
 ---
-![allusers](src/images/userbyidSS.png)
+![thoughtbyId](src/images/thoughtbyidSS.png)
 ---
-If you want to view a specific user, in hte URL or fetch call, direct to /api/users/:id and perform a GET method where :id refers to the user you wish to return the information of. This should return a user with the matching id from the URL parameter. 
-
-
+If you want to view a specific thought0, in the URL or fetch call, direct to /api/thoughts/:id and perform a GET method where :id refers to the thought you wish to return the information of. This should return a thought with the matching id from the URL parameter. 
 
 ---
 ## Update
@@ -172,6 +174,47 @@ To update a thought text or the username referencing it, in hte URL or fetch cal
 
 The username that is changed within this thought, will not change the username of the original user who created the thought, rather the username defined in the [thought](#create-thought) POST rather then the [user](#create-user) POST.
 
+---
+## Delete
+---
+### **Delete User**
+---
+![reaction](src/images/deleteuserSS.png)
+---
+
+To delete a user, in the URL or fetch call, direct to /api/users/:id as a DELETE method, where :id refers to the user's id referencing the user you wish to delete. If the user has any thoughts they had made in the past, it will also delete those values and return the number of thoughts it deleted. 
+
+---
+### **Delete Thought**
+---
+![reaction](src/images/deletethoughtSS.png)
+---
+
+To delete a thought, in the URL or fetch call,  direct to /api/thoughts/:id as a DELETE method, where :id refers to the thought's id referencing which thought you wish to delete. If the user has any reactions within the thought, those reactions will also be deleted. 
+
+---
+### **Delete Friend**
+---
+![reaction](src/images/deletefriendSS.png)
+---
+
+To delete a friend from a user, in the URL or fetch call, direct to /api/users/:id/friends/:friendId as a DELETE method, where :id refers to which user's friends list, and :friendId refers to a friendID they wish to delete. If a friend is deleted, the user will remain within the system, and its reference will be removed from the list.
+
+---
+### **Delete Reaction**
+---
+![reaction](src/images/deletereactionSS.png)
+---
+
+To delete a reaction from a thought, in the URL or fetch call, direct to /api/thoughts/:id/reactions as a DELETE method, where :id refers to the thought's id which you are referencing. In this component, a JSON is required to determine which reply you wish to remove. The correct JSON format is as follows:
+
+>{
+> reactionId: \<String> 
+>}
+
+
+The reactionId is a seperate Id from Mongo's _id parameter from the model, so be sure you select the correct id, otherwise the deletion will fail ot complete 
+
   ## **Credits**
   Hamzah Ullah
 
@@ -191,6 +234,12 @@ The username that is changed within this thought, will not change the username o
   ---
 
   ## **Questions?**
+
+  Check out our youtube video of our API in action [here](https://youtu.be/bsZWSUiCA-w) or the picture below:
+
+  [![Image of My Youtube Video of Module 9
+](src/images/ytSS.PNG)
+](https://youtu.be/bsZWSUiCA-w)
 
   ### **Github**
   [Repository](https://github.com/brobro10000)
