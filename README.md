@@ -238,7 +238,7 @@ The reactionId is a seperate Id from Mongo's _id parameter from the model, so be
   Check out our youtube video of our API in action [here](https://youtu.be/bsZWSUiCA-w) or the picture below:
 
   [![Image of My Youtube Video of Module 9
-](src/images/ytSS.PNG)
+](src/images/ytSS.png)
 ](https://youtu.be/bsZWSUiCA-w)
 
   ### **Github**
